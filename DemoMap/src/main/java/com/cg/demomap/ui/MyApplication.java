@@ -3,6 +3,7 @@ package com.cg.demomap.ui;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,12 +67,8 @@ public class MyApplication {
 				List<Map.Entry<Integer, Employee<Integer,Double>>> ls=new ArrayList<Map.Entry<Integer,Employee<Integer,Double>>>(hm.entrySet());
 				Collections.sort(ls, new SalaryComparator());
 				System.out.println(ls);
-				Map<Integer,Employee<Integer,Double>> map=new LinkedHashMap<Integer, Employee<Integer,Double>>();
-				for(Map.Entry<Integer, Employee<Integer,Double>> e1:ls) {
-					map.put(e1.getKey(), e1.getValue());
-				}
-				for(Employee<Integer,Double> v:map.values()) {
-					System.out.println(v.getEmpId()+" "+v.getEmpName()+" "+v.getEmpSalary());
+				for(Map.Entry<Integer, Employee<Integer,Double>> em:ls) {
+					System.out.println(em.getKey()+" "+em.getValue());
 				}
 				break;
 			default:
