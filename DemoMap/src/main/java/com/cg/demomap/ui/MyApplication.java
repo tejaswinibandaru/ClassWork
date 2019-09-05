@@ -11,9 +11,23 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Scanner;
 
+import com.cg.demomap.dto.Department;
 import com.cg.demomap.dto.Employee;
+import com.cg.demomap.exception.EmployeeException;
 import com.cg.demomap.service.EmployeeService;
 import com.cg.demomap.service.EmployeeServiceImpl;
+
+
+class NameComparator implements Comparator<Map.Entry<Integer, Employee<Integer,Double>>>{
+
+	@Override
+	public int compare(Entry<Integer, Employee<Integer, Double>> o1, Entry<Integer, Employee<Integer, Double>> o2) {
+		// TODO Auto-generated method stub
+		return o1.getValue().getEmpName().compareTo(o2.getValue().getEmpName());
+	}
+
+	
+}
 
 class SalaryComparator implements Comparator<Map.Entry<Integer, Employee<Integer,Double>>>{
 
@@ -36,8 +50,10 @@ public class MyApplication {
 		System.out.println("2.Show employees");
 		System.out.println("3.Sort Employees By Name");
 		System.out.println("4.Sort Employees By Salary");
+		System.out.println("5.Add employees to project list");
+		System.out.println("6.Add project to employee");
 	}
-	public static void main(String[] args) {
+	public static void main(String[] args){
 		EmployeeService<Integer, Double> es=new EmployeeServiceImpl<Integer, Double>();
 		Scanner scanner=new Scanner(System.in);
 		while(true) {
@@ -48,11 +64,28 @@ public class MyApplication {
 			case 1:
 				System.out.println("Enter the employee id:");
 				int id=scanner.nextInt();
+				
 				System.out.println("Enter the employee name:");
 				String name=scanner.next();
+				
 				System.out.println("Enter the employee salary: ");
 				double salary=scanner.nextDouble();
-				Employee<Integer, Double> emp=new Employee<Integer, Double>(id, name, salary);
+				
+				try {
+					EmployeeServiceImpl.validateSalary(salary);
+				}catch(Exception e){
+					System.out.println(e.getMessage());
+				}
+				
+				System.out.println("Enter the employee department id:");
+				int deptId=scanner.nextInt();
+				
+				System.out.println("Enter the employee department name:");
+				String deptName=scanner.next();
+				
+				Department dept=new Department(deptId,deptName);
+				
+				Employee<Integer, Double> emp=new Employee<Integer, Double>(id, name, salary,dept,null);
 				System.out.println(es.addEmployee(emp));
 				System.out.println("-----------------------------------------------------------------------");
 				break;
@@ -62,15 +95,17 @@ public class MyApplication {
 				System.out.println("-----------------------------------------------------------------------");
 				break;
 			case 3:
+				hm=es.showEmployees();
+				List<Map.Entry<Integer, Employee<Integer,Double>>> lis=new LinkedList<Map.Entry<Integer,Employee<Integer,Double>>>(hm.entrySet());
+				Collections.sort(lis, new NameComparator());
+				System.out.println(lis);
 				break;
+				
 			case 4:
 				hm=es.showEmployees();
 				List<Map.Entry<Integer, Employee<Integer,Double>>> ls=new LinkedList<Map.Entry<Integer,Employee<Integer,Double>>>(hm.entrySet());
 				Collections.sort(ls, new SalaryComparator());
 				System.out.println(ls);
-				for(Entry<Integer, Employee<Integer,Double>> em:ls) {
-					System.out.println(em.getKey()+" "+em.getValue());
-				}
 				break;
 			default:
 				scanner.close();
@@ -78,4 +113,5 @@ public class MyApplication {
 			}
 		}
 	}
+
 }
