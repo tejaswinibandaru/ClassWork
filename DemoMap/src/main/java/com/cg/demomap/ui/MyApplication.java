@@ -66,11 +66,11 @@ public class MyApplication {
 				List<Map.Entry<Integer, Employee<Integer,Double>>> ls=new ArrayList<Map.Entry<Integer,Employee<Integer,Double>>>(hm.entrySet());
 				Collections.sort(ls, new SalaryComparator());
 				System.out.println(ls);
-				Map<Integer,Employee<Integer,Double>> hashmap=new HashMap<Integer, Employee<Integer,Double>>();
+				Map<Integer,Employee<Integer,Double>> map=new LinkedHashMap<Integer, Employee<Integer,Double>>();
 				for(Map.Entry<Integer, Employee<Integer,Double>> e1:ls) {
-					hashmap.put(e1.getKey(), e1.getValue());
+					map.put(e1.getKey(), e1.getValue());
 				}
-				for(Employee<Integer,Double> v:hashmap.values()) {
+				for(Employee<Integer,Double> v:map.values()) {
 					System.out.println(v.getEmpId()+" "+v.getEmpName()+" "+v.getEmpSalary());
 				}
 				break;
