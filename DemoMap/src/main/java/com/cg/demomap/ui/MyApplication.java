@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,7 +65,7 @@ public class MyApplication {
 				break;
 			case 4:
 				hm=es.showEmployees();
-				List<Map.Entry<Integer, Employee<Integer,Double>>> ls=new ArrayList<Map.Entry<Integer,Employee<Integer,Double>>>(hm.entrySet());
+				List<Map.Entry<Integer, Employee<Integer,Double>>> ls=new LinkedList<Map.Entry<Integer,Employee<Integer,Double>>>(hm.entrySet());
 				Collections.sort(ls, new SalaryComparator());
 				System.out.println(ls);
 				for(Map.Entry<Integer, Employee<Integer,Double>> em:ls) {
