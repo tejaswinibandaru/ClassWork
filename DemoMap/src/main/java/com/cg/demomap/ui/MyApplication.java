@@ -68,7 +68,7 @@ public class MyApplication {
 				List<Map.Entry<Integer, Employee<Integer,Double>>> ls=new LinkedList<Map.Entry<Integer,Employee<Integer,Double>>>(hm.entrySet());
 				Collections.sort(ls, new SalaryComparator());
 				System.out.println(ls);
-				for(Map.Entry<Integer, Employee<Integer,Double>> em:ls) {
+				for(Entry<Integer, Employee<Integer,Double>> em:ls) {
 					System.out.println(em.getKey()+" "+em.getValue());
 				}
 				break;
